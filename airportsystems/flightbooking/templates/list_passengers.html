@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Passenger List</title>
+</head>
+<body>
+    <h1>Passenger List</h1>
+    <ul>
+    {% for passenger in passengers %}
+        <li>{{ passenger.name }}</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>
