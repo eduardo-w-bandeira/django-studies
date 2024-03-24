@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Passenger List</title>
 </head>
 <body>
     <h1>Passenger List</h1>
     <ul>
     {% for passenger in passengers %}
-        <li>{{ passenger.name }}</li>
+        <li>{{ passenger.passenger_id }}: {{ passenger.name }}</li>
     {% endfor %}
     </ul>
 </body>
