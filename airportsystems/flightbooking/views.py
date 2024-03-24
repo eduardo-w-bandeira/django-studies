@@ -11,7 +11,7 @@ def index(request):
 
 def list_passengers(request):
     passengers = Passenger.objects.all()
-    return render(request, 'list_passengers.html', {'passengers': passengers})
+    return render(request, "list_passengers.html", {"passengers": passengers})
 
 
 def get_passenger(request, passenger_id):
@@ -22,33 +22,35 @@ def get_passenger(request, passenger_id):
 
 def create_passenger(request):
     PAGE_TITLE = "Create Passenger"
-    if request.method == 'POST':
+    if request.method == "POST":
         form = PassengerForm(request.POST)
         if form.is_valid():
             form.save()
             # Redirect to the passenger list page after creating a passenger
-            return redirect('list_passengers')
+            return redirect("list_passengers")
     else:
         form = PassengerForm()
-    context = {'form': form,
-               'page_title': PAGE_TITLE}
-    return render(request, 'create_or_udapte_passenger.html', context)
+    context = {"form": form,
+               "page_title": PAGE_TITLE,
+               "button_label": "Create", }
+    return render(request, "creating_or_updating_base.html", context)
 
 
 def update_passenger(request, passenger_id):
     PAGE_TITLE = "Update Passenger"
     passenger = get_object_or_404(Passenger, pk=passenger_id)
-    if request.method == 'POST':
+    if request.method == "POST":
         form = PassengerForm(request.POST, instance=passenger)
         if form.is_valid():
             form.save()
-            # Redirect to the updated passenger's details page
-            return redirect('get_passenger', passenger_id=passenger_id)
+            # Redirect to the updated passenger"s details page
+            return redirect("get_passenger", passenger_id=passenger_id)
     else:
         form = PassengerForm(instance=passenger)
-    context = {'form': form,
-               'page_title': PAGE_TITLE}
-    return render(request, 'create_or_update_passenger.html', context)
+    context = {"form": form,
+               "page_title": PAGE_TITLE,
+               "button_label": "Update", }
+    return render(request, "creating_or_updating_base.html", context)
 
 
 def delete_passenger(request, passenger_id):
@@ -61,7 +63,7 @@ def delete_passenger(request, passenger_id):
 # Views for Flights
 def list_flights(request):
     flights = Flight.objects.all()
-    return render(request, 'list_flights.html', {'flights': flights})
+    return render(request, "list_flights.html", {"flights": flights})
 
 
 def get_flight(request, flight_id):
@@ -72,39 +74,41 @@ def get_flight(request, flight_id):
 
 def create_flight(request):
     PAGE_TITLE = "Create Flight"
-    if request.method == 'POST':
+    if request.method == "POST":
         form = FlightForm(request.POST)
         if form.is_valid():
             form.save()
             # Redirect to the flight list page after creating a flight
-            return redirect('list_flights')
+            return redirect("list_flights")
     else:
         form = FlightForm()
-    context = {'form': form,
-               'page_title': PAGE_TITLE}
-    return render(request, 'create_or_udapte_flight.html', context)
+    context = {"form": form,
+               "page_title": PAGE_TITLE,
+               "button_label": "Create", }
+    return render(request, "creating_or_updating_base.html", context)
 
 
 def update_flight(request, flight_id):
     PAGE_TITLE = "Update Flight"
     flight = get_object_or_404(Flight, pk=flight_id)
-    if request.method == 'POST':
+    if request.method == "POST":
         form = FlightForm(request.POST, instance=flight)
         if form.is_valid():
             form.save()
-            # Redirect to the updated flight's details page
-            return redirect('get_flight', flight_id=flight_id)
+            # Redirect to the updated flight"s details page
+            return redirect("get_flight", flight_id=flight_id)
     else:
         form = FlightForm(instance=flight)
-    context = {'form': form,
-               'page_title': PAGE_TITLE}
-    return render(request, 'create_or_update_flight.html', context)
+    context = {"form": form,
+               "page_title": PAGE_TITLE,
+               "button_label": "Update", }
+    return render(request, "creating_or_updating_base.html", context)
 
 
 def delete_flight(request, flight_id):
     flight = get_object_or_404(Flight, pk=flight_id)
-    name = flight.name
+    flight_number = flight.flight_number
     flight.delete()
-    return JsonResponse({"message": f"Flight {name} (id: {flight_id}) deleted!"}, safe=False)
+    return JsonResponse({"message": f"Flight Number {flight_number} deleted!"}, safe=False)
 
 # Views for Bookings

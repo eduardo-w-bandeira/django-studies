@@ -22,8 +22,9 @@ urlpatterns = [
          views.get_flight, name="get_flight"),
     path("flights/create/", views.create_flight,
          name="create_flight"),
-    path("flights/<int:flight_id>/update",
-         views.update_flight, name="update_flight"),
+    #     name="creating_or_updating_base"),
+    path("flights/<int:flight_id>/update", views.update_flight,
+         name="update_flight"),
     path("flights/<int:flight_id>/delete/",
          views.delete_flight, name="delete_flight"),
 ]
