@@ -18,23 +18,25 @@ def pascal_to_visual(pascal: str) -> str:
     return visual_title
 
 
-def _list_mobjs(request, mobjs) -> JsonResponse:
+def _list_mobjs(request, model_class, mobjs="all") -> JsonResponse:
     """Abstraction to list the objects"""
-    model_class = mobjs[0].__class__
     if request.method != "GET":
         return JsonResponse({'error': "Something went wrong"}, status=400)
+    if mobjs == "all":
+        mobjs = model_class.objects.all()
     json_dicts = [mobj.serialize() for mobj in mobjs]
-    model_name = model_class._meta.model_name
-    return JsonResponse({model_name: json_dicts}, safe=False)
+    table_name = model_class._meta.model_name
+    return JsonResponse({table_name: json_dicts}, safe=False)
 
 
 def _create_mobj(request, model_class) -> JsonResponse | HttpResponse:
     """Abstraction for the create function"""
-    model_name = model_class._meta.model_name
-    form_class = eval(f"{model_name}Form")  # E.g. CustomerForm
+    table_name = model_class._meta.model_name
+    class_name = model_class.__name__
+    form_class = eval(f"{class_name}Form")  # E.g. CustomerForm
     if request.method == "GET":
         form = form_class()
-        visual_name = pascal_to_visual(model_name)
+        visual_name = pascal_to_visual(model_class.__name__)
         context = {"form": form,
                    "page_title": f"Create {visual_name}",
                    "button_label": "Create", }
@@ -46,22 +48,22 @@ def _create_mobj(request, model_class) -> JsonResponse | HttpResponse:
         if form.is_valid():
             # Django form.save() saves the model magically
             mobj = form.save()
-            return JsonResponse({model_name: mobj.serialize()})
+            return JsonResponse({table_name: mobj.serialize()})
     return JsonResponse({'error': "Something went wrong"}, status=400)
 
 
-def _get_or_update_or_delete_mobj(request, mobj) -> JsonResponse:
+def _get_or_update_or_delete_mobj(request, mobj, methods=["GET", "PUT", "DELETE"]) -> JsonResponse:
     """Abstraction for "getting, updating or deleting an Model.object"""
     model_name = mobj._meta.model_name
-    if request.method == "GET":
+    if "GET" in methods and request.method == "GET":
         return JsonResponse({model_name: mobj.serialize()})
-    if request.method == "PUT":
+    if "PUT" in methods and request.method == "PUT":
         data = json.loads(request.body)
         for key, value in data.items():
             setattr(mobj, key, value)
         mobj.save()
         return JsonResponse({model_name: mobj.serialize()})
-    if request.method == "DELETE":
+    if "DELETE" in methods and request.method == "DELETE":
         serial_map = mobj.serialize()
         mobj.delete()
         return JsonResponse({model_name: serial_map})
@@ -69,12 +71,13 @@ def _get_or_update_or_delete_mobj(request, mobj) -> JsonResponse:
 
 
 def index(request) -> HttpResponse:
-    return HttpResponse("<h1>E-Commerce Page</h1>")
+    var = "Ecommerce Page"
+    return HttpResponse(f"<h1>{var}</h1>")
 
 
 # Customer views
 def customer_list(request):
-    return _list_mobjs(request, Customer.objects.all())
+    return _list_mobjs(request, Customer)
 
 
 def customer_create(request):
@@ -87,7 +90,7 @@ def customer_detail(request, customer_id):
 
 # Category views
 def category_list(request):
-    return _list_mobjs(request, Category.objects.all())
+    return _list_mobjs(request, Category)
 
 
 def category_create(request):
@@ -100,7 +103,7 @@ def category_detail(request, category_id):
 
 # Product views
 def product_list(request):
-    return _list_mobjs(request, Product.objects.all())
+    return _list_mobjs(request, Product)
 
 
 def product_create(request):
@@ -113,7 +116,7 @@ def product_detail(request, product_id):
 
 # Order views
 def order_list(request):
-    return _list_mobjs(request, Order.objects.all())
+    return _list_mobjs(request, Order)
 
 
 def order_create(request):
@@ -140,7 +143,7 @@ def order_detail_detail(request, order_id, order_detail_id):
 
 # Payment views
 def payment_list(request):
-    return _list_mobjs(request, Payment.objects.all())
+    return _list_mobjs(request, Payment)
 
 
 def payment_create(request):
@@ -153,7 +156,7 @@ def payment_detail(request, payment_id):
 
 # Shipping views
 def shipping_list(request):
-    return _list_mobjs(request, Shipping.objects.all())
+    return _list_mobjs(request, Shipping)
 
 
 def shipping_create(request):
@@ -161,13 +164,15 @@ def shipping_create(request):
 
 
 def shipping_detail(request, shipping_id):
-    return _get_or_update_or_delete_mobj(request, Shipping.objects.get(id=shipping_id))
+    shipping = Shipping.objects.get(id=shipping_id)
+    methods = ["GET", "PUT"]  # Not DELETE
+    return _get_or_update_or_delete_mobj(request, shipping, methods)
 
 
 # Customer-Order Interaction views
 def customer_order_list(request, customer_id):
     orders = Order.objects.filter(customer_id=customer_id)
-    return _list_mobjs(request, orders)
+    return _list_mobjs(request, Order, orders)
 
 
 def order_customer_detail(request, order_id):
@@ -179,13 +184,13 @@ def order_customer_detail(request, order_id):
 def product_order_list(request, product_id):
     order_details = OrderDetail.objects.filter(product_id=product_id)
     orders = [order_detail.order for order_detail in order_details]
-    return _list_mobjs(request, orders)
+    return _list_mobjs(request, Order, orders)
 
 
 def order_product_list(request, product_id):
     order_details = OrderDetail.objects.filter(product_id=product_id)
     products = [order_detail.product for order_detail in order_details]
-    return _list_mobjs(request, products)
+    return _list_mobjs(request, Product, products)
 
 
 def order_product_detail(request, order_id, product_id):
