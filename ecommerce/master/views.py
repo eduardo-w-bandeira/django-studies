@@ -54,19 +54,20 @@ def _create_mobj(request, model_class) -> JsonResponse | HttpResponse:
 
 def _get_or_update_or_delete_mobj(request, mobj, methods=["GET", "PUT", "DELETE"]) -> JsonResponse:
     """Abstraction for "getting, updating or deleting an Model.object"""
-    model_name = mobj._meta.model_name
+    table_name = mobj._meta.model_name
     if "GET" in methods and request.method == "GET":
-        return JsonResponse({model_name: mobj.serialize()})
+        return JsonResponse({table_name: mobj.serialize()})
     if "PUT" in methods and request.method == "PUT":
         data = json.loads(request.body)
         for key, value in data.items():
             setattr(mobj, key, value)
         mobj.save()
-        return JsonResponse({model_name: mobj.serialize()})
+        return JsonResponse({table_name: mobj.serialize()})
     if "DELETE" in methods and request.method == "DELETE":
+        print(f"******delete of {mobj.id}")
         serial_map = mobj.serialize()
         mobj.delete()
-        return JsonResponse({model_name: serial_map})
+        return JsonResponse({table_name: f"id {serial_map['id']}deleted"})
     return JsonResponse({'error': "Something went wrong"}, status=400)
 
 
@@ -130,10 +131,10 @@ def order_detail(request, order_id):
 # Order Detail views
 def order_detail_list(request, order_id):
     order_details = OrderDetail.objects.filter(order_id=order_id)
-    return JsonResponse(request, order_details)
+    return _list_mobjs(request, OrderDetail, order_details)
 
 
-def order_detail_create(request):
+def order_detail_create(request, order_id):
     return _create_mobj(request, OrderDetail)
 
 
@@ -176,7 +177,7 @@ def customer_order_list(request, customer_id):
 
 
 def order_customer_detail(request, order_id):
-    order = Order.objects.filter(id=order_id)
+    order = Order.objects.get(id=order_id)
     return _get_or_update_or_delete_mobj(request, order.customer)
 
 
@@ -187,8 +188,8 @@ def product_order_list(request, product_id):
     return _list_mobjs(request, Order, orders)
 
 
-def order_product_list(request, product_id):
-    order_details = OrderDetail.objects.filter(product_id=product_id)
+def order_product_list(request, order_id):
+    order_details = OrderDetail.objects.filter(order_id=order_id)
     products = [order_detail.product for order_detail in order_details]
     return _list_mobjs(request, Product, products)
 
@@ -199,29 +200,24 @@ def order_product_detail(request, order_id, product_id):
 
 # Order-Payment Interaction views
 def order_payment_detail(request, order_id):
-    order = Order.objects.filter(id=order_id)
-    payment = Payment.objects.filter(order=order)
+    order = Order.objects.get(id=order_id)
+    payment = Payment.objects.get(order=order)
     return _get_or_update_or_delete_mobj(request, payment)
 
 
 # Order-Shipping Interaction views
 def order_shipping_detail(request, order_id):
-    order = Order.objects.filter(id=order_id)
-    shipping = Shipping.objects.filter(order=order)
+    order = Order.objects.get(id=order_id)
+    shipping = Shipping.objects.get(order=order)
     return _get_or_update_or_delete_mobj(request, shipping)
 
 
 # Product-Category Interaction views
-def product_category_detail(request, product_id):
-    product = Product.objects.filter(id=product_id)
-    return _get_or_update_or_delete_mobj(request, product.category)
-
-
 def category_product_list(request, category_id):
     products = Product.objects.filter(category_id=category_id)
     return _list_mobjs(request, Product, products)
 
 
 def product_category_detail(request, product_id, category_id):
-    category = Category.objects.filter(id=category_id)
+    category = Category.objects.get(id=category_id)
     return _get_or_update_or_delete_mobj(request, category)
