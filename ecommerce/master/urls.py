@@ -2,58 +2,67 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
+
+    path('', views.index),
 
     # Customer Endpoints
-    path('customer/', views.customer_handler),
-    path('customer/<int:id>/', views.customer_info),
-
-    # Product Endpoints
-    path('product/', views.product_handler),
-    path('product/<int:id>/', views.product_info),
-
-    # Order Endpoints
-    path('order/', views.order_handler),
-    path('order/<int:id>/', views.order_info),
-
-    # Order Details Endpoints
-    path('order/<int:id>/detail/', views.order_detail_handler),
-    path('order/<int:orderId>/detail/<int:detailId>/',
-         views.order_detail_info),
+    path('customer/', views.customer_list),
+    path('customer/create', views.customer_create),
+    path('customer/<int:customer_id>/', views.customer_detail),
 
     # Category Endpoints
-    path('category/', views.category_handler),
-    path('category/<int:id>/', views.category_info),
+    path('category/', views.category_list),
+    path('category/create', views.category_create),
+    path('category/<int:category_id>/', views.category_detail),
+
+    # Product Endpoints
+    path('product/', views.product_list),
+    path('product/create', views.product_create),
+    path('product/<int:product_id>/', views.product_detail),
+
+    # Order Endpoints
+    path('order/', views.order_list),
+    path('order/create', views.order_create),
+    path('order/<int:order_id>/', views.order_detail),
+
+    # Order Details Endpoints
+    path('order/<int:order_id>/detail/', views.order_detail_list),
+    path('order/<int:order_id>/detail/create', views.order_detail_create),
+    path('order/<int:order_id>/detail/<int:order_detail_id>/',
+         views.order_detail_detail),
 
     # Payment Endpoints
-    path('payment/', views.payment_handler),
-    path('payment/<int:id>/', views.payment_info),
+    path('payment/', views.payment_list),
+    path('payment/create', views.payment_create),
+    path('payment/<int:payment_id>/', views.payment_detail),
 
     # Shipping Endpoints
-    path('shipping/', views.shipping_handler),
-    path('shipping/<int:id>/', views.shipping_info),
+    path('shipping/', views.shipping_list),
+    path('shipping/create', views.shipping_create),
+    path('shipping/<int:shipping_id>/', views.shipping_detail),
 
     # Customer-Order Interaction
-    path('customer/<int:customerId>/order/', views.customer_order_handler),
-    path('order/<int:orderId>/customer/', views.order_customer_info),
+    path('customer/<int:customer_id>/order/', views.customer_order_list),
+    path('order/<int:order_id>/customer/', views.order_customer_detail),
 
     # Product-Order Interaction
-    path('product/<int:productId>/orders/', views.product_order_list),
-    path('order/<int:orderId>/products/', views.order_product_list),
-    path('order/<int:orderId>/product/<int:productId>/',
-         views.order_product_handler),
+    path('product/<int:product_id>/order/', views.product_order_list),
+    path('order/<int:order_id>/product/', views.order_product_list),
+    path('order/<int:order_id>/product/<int:product_id>/',
+         views.order_product_detail),
 
     # Order-Payment Interaction
-    path('order/<int:orderId>/payment/',
-         views.order_payment_info_handler),
+    path('order/<int:order_id>/payment/',
+         views.order_payment_detail),
 
     # Order-Shipping Interaction
-    path('order/<int:orderId>/shipping/',
-         views.order_shipping_info_handler),
+    path('order/<int:order_id>/shipping/',
+         views.order_shipping_detail),
 
     # Product-Category Interaction
-    path('product/<int:productId>/category/', views.product_category_info),
-    path('category/<int:categoryId>/products/', views.category_product_handler),
-    path('product/<int:productId>/category/<int:categoryId>/',
-         views.product_category_handler),
+    path('product/<int:product_id>/category/', views.product_category_detail),
+    path('category/<int:category_id>/product/',
+         views.category_product_list),
+    path('product/<int:product_id>/category/<int:category_id>/',
+         views.product_category_detail),
 ]
