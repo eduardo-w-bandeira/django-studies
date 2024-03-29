@@ -34,7 +34,6 @@ class Product(models.Model):
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     order_date = models.DateField()
-    # total_amount = models.DecimalField(max_digits=10, decimal_places=2)
 
     def serialize(self) -> dict:
         return model_to_dict(self)

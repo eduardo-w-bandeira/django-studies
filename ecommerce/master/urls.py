@@ -7,38 +7,38 @@ urlpatterns = [
 
     # Customer Endpoints
     path('customer/', views.customer_list),
-    path('customer/create', views.customer_create),
+    path('customer/create/', views.customer_create),
     path('customer/<int:customer_id>/', views.customer_detail),
 
     # Category Endpoints
     path('category/', views.category_list),
-    path('category/create', views.category_create),
+    path('category/create/', views.category_create),
     path('category/<int:category_id>/', views.category_detail),
 
     # Product Endpoints
     path('product/', views.product_list),
-    path('product/create', views.product_create),
+    path('product/create/', views.product_create),
     path('product/<int:product_id>/', views.product_detail),
 
     # Order Endpoints
     path('order/', views.order_list),
-    path('order/create', views.order_create),
+    path('order/create/', views.order_create),
     path('order/<int:order_id>/', views.order_detail),
 
     # Order Details Endpoints
     path('order/<int:order_id>/detail/', views.order_detail_list),
-    path('order/<int:order_id>/detail/create', views.order_detail_create),
+    path('order/<int:order_id>/detail/create/', views.order_detail_create),
     path('order/<int:order_id>/detail/<int:order_detail_id>/',
          views.order_detail_detail),
 
     # Payment Endpoints
     path('payment/', views.payment_list),
-    path('payment/create', views.payment_create),
+    path('payment/create/', views.payment_create),
     path('payment/<int:payment_id>/', views.payment_detail),
 
     # Shipping Endpoints
     path('shipping/', views.shipping_list),
-    path('shipping/create', views.shipping_create),
+    path('shipping/create/', views.shipping_create),
     path('shipping/<int:shipping_id>/', views.shipping_detail),
 
     # Customer-Order Interaction

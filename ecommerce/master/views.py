@@ -2,6 +2,8 @@ import re
 import json
 from django.shortcuts import render, HttpResponse
 from django.http import JsonResponse
+from django.db import models
+from django.views.decorators.csrf import csrf_exempt
 from .models import Customer, Category, Product, Order, OrderDetail, Payment, Shipping
 from .forms import CustomerForm, CategoryForm, ProductForm, OrderForm, OrderDetailForm, PaymentForm, ShippingForm
 
@@ -22,11 +24,22 @@ def _list_mobjs(request, model_class, mobjs="all") -> JsonResponse:
     """Abstraction to list the objects"""
     if request.method != "GET":
         return JsonResponse({'error': "Something went wrong"}, status=400)
-    if mobjs == "all":
+    s_page_number = request.GET.get('page_number')
+    s_page_size = request.GET.get('page_size')
+    if s_page_number and s_page_size:
+        page_number = int(s_page_number)
+        page_size = int(s_page_size)
+        start = (page_number - 1) * page_size
+        end = start + page_size
+        if mobjs == "all":
+            mobjs = model_class.objects.all()[start:end]
+        else:
+            mobjs = mobjs[start:end]
+    elif mobjs == "all":
         mobjs = model_class.objects.all()
     json_dicts = [mobj.serialize() for mobj in mobjs]
     table_name = model_class._meta.model_name
-    return JsonResponse({table_name: json_dicts}, safe=False)
+    return JsonResponse({table_name: json_dicts})
 
 
 def _create_mobj(request, model_class) -> JsonResponse | HttpResponse:
@@ -46,28 +59,34 @@ def _create_mobj(request, model_class) -> JsonResponse | HttpResponse:
     if request.method == "POST":
         form = form_class(request.POST)
         if form.is_valid():
-            # Django form.save() saves the model magically
+            # Django form.save() saves the model "magically"
             mobj = form.save()
             return JsonResponse({table_name: mobj.serialize()})
     return JsonResponse({'error': "Something went wrong"}, status=400)
 
 
+def _update_mobj(request, mobj, table_name):
+    data = json.loads(request.body)
+    for key, value in data.items():
+        field = mobj._meta.get_field(key)
+        if isinstance(field, (models.ForeignKey, models.OneToOneField, models.ManyToManyField)):
+            key += "_id"  # E.g. 'category' becomes 'category_id', so it can assigned
+        setattr(mobj, key, value)
+    mobj.save()
+    return JsonResponse({table_name: mobj.serialize()})
+
+
 def _get_or_update_or_delete_mobj(request, mobj, methods=["GET", "PUT", "DELETE"]) -> JsonResponse:
-    """Abstraction for "getting, updating or deleting an Model.object"""
+    """Abstraction for getting, updating or deleting an Model.object"""
     table_name = mobj._meta.model_name
     if "GET" in methods and request.method == "GET":
         return JsonResponse({table_name: mobj.serialize()})
     if "PUT" in methods and request.method == "PUT":
-        data = json.loads(request.body)
-        for key, value in data.items():
-            setattr(mobj, key, value)
-        mobj.save()
-        return JsonResponse({table_name: mobj.serialize()})
+        return _update_mobj(request, mobj, table_name)
     if "DELETE" in methods and request.method == "DELETE":
-        print(f"******delete of {mobj.id}")
-        serial_map = mobj.serialize()
+        id = mobj.id
         mobj.delete()
-        return JsonResponse({table_name: f"id {serial_map['id']}deleted"})
+        return JsonResponse({table_name: f"id {id}deleted"})
     return JsonResponse({'error': "Something went wrong"}, status=400)
 
 
@@ -85,6 +104,7 @@ def customer_create(request):
     return _create_mobj(request, Customer)
 
 
+@csrf_exempt  # This disables CSRF validation, so that you can delete through POSTMAN
 def customer_detail(request, customer_id):
     return _get_or_update_or_delete_mobj(request, Customer.objects.get(id=customer_id))
 
@@ -98,6 +118,7 @@ def category_create(request):
     return _create_mobj(request, Category)
 
 
+@csrf_exempt
 def category_detail(request, category_id):
     return _get_or_update_or_delete_mobj(request, Category.objects.get(id=category_id))
 
@@ -111,6 +132,7 @@ def product_create(request):
     return _create_mobj(request, Product)
 
 
+@csrf_exempt
 def product_detail(request, product_id):
     return _get_or_update_or_delete_mobj(request, Product.objects.get(id=product_id))
 
@@ -124,6 +146,7 @@ def order_create(request):
     return _create_mobj(request, Order)
 
 
+@csrf_exempt
 def order_detail(request, order_id):
     return _get_or_update_or_delete_mobj(request, Order.objects.get(id=order_id))
 
@@ -138,6 +161,7 @@ def order_detail_create(request, order_id):
     return _create_mobj(request, OrderDetail)
 
 
+@csrf_exempt
 def order_detail_detail(request, order_id, order_detail_id):
     return _get_or_update_or_delete_mobj(request, OrderDetail.objects.get(id=order_detail_id))
 
@@ -151,8 +175,11 @@ def payment_create(request):
     return _create_mobj(request, Payment)
 
 
+@csrf_exempt
 def payment_detail(request, payment_id):
-    return _get_or_update_or_delete_mobj(request, Payment.objects.get(id=payment_id))
+    payment = Payment.objects.get(id=payment_id)
+    methods = ["GET", "PUT"]  # Not DELETE
+    return _get_or_update_or_delete_mobj(request, payment, methods)
 
 
 # Shipping views
@@ -164,6 +191,7 @@ def shipping_create(request):
     return _create_mobj(request, Shipping)
 
 
+@csrf_exempt
 def shipping_detail(request, shipping_id):
     shipping = Shipping.objects.get(id=shipping_id)
     methods = ["GET", "PUT"]  # Not DELETE

@@ -1,0 +1,119 @@
+{
+	"info": {
+		"_postman_id": "373325b6-7681-4457-bc58-dfb2ec4ef3de",
+		"name": "ecommerce endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33380893"
+	},
+	"item": [
+		{
+			"name": "List products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/product/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"product",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a product",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/product/create/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"product",
+						"create",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a product by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/product/4/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"product",
+						"4",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a product by id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\": 4, \"name\": \"Name updated\", \"category\": 1, \"price\": \"50.00\", \"description\": \"Absbsbsbs\", \"stock\": 9}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/product/4/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"product",
+						"4",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a product by id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/product/3/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"product",
+						"3",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://127.0.0.1:8000"
+		}
+	]
+}

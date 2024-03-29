@@ -1,51 +1,56 @@
-- / GET
-- /customer/ GET, POST
-- /customer/create GET, POST
-- /customer/<int:customer_id>/ GET
-- /customer/<int:customer_id>/ PUT
-- /customer/<int:customer_id>/ DELETE
-- /category/ GET, POST
-- /category/create GET, POST
-- /category/<int:category_id>/ GET
-- /category/<int:category_id>/ PUT
-- /category/<int:category_id>/ DELETE
-- /product/ GET, POST
-- /product/create GET, POST
-- /product/<int:product_id>/ GET
-- /product/<int:product_id>/ PUT
-- /product/<int:product_id>/ DELETE
-- /order/ GET, POST
-- /order/create GET, POST
-- /order/<int:order_id>/ GET
-- /order/<int:order_id>/ PUT
-- /order/<int:order_id>/ DELETE
-- /order/<int:order_id>/detail/ GET, POST
-- /order/<int:order_id>/detail/create GET, POST
-- /order/<int:order_id>/detail/<int:order_detail_id>/ GET
-- /order/<int:order_id>/detail/<int:order_detail_id>/ PUT
-- /order/<int:order_id>/detail/<int:order_detail_id>/ DELETE
-- /payment/ GET, POST
-- /payment/create GET, POST
-- /payment/<int:payment_id>/ GET
-- /payment/<int:payment_id>/ PUT
-- /shipping/ GET, POST
-- /shipping/create GET, POST
-- /shipping/<int:shipping_id>/ GET
-- /shipping/<int:shipping_id>/ PUT
-- /shipping/<int:shipping_id>/ DELETE
-- /customer/<int:customer_id>/order/ GET
-- /order/<int:order_id>/customer/ GET
-- /product/<int:product_id>/order/ GET
-- /order/<int:order_id>/product/ GET
-- /order/<int:order_id>/product/<int:product_id>/ GET
-- /order/<int:order_id>/product/<int:product_id>/ PUT
-- /order/<int:order_id>/product/<int:product_id>/ DELETE
-- /order/<int:order_id>/payment/ GET
-- /order/<int:order_id>/payment/ PUT
-- /order/<int:order_id>/payment/ DELETE
-- /order/<int:order_id>/shipping/ GET
-- /order/<int:order_id>/shipping/ PUT
-- /order/<int:order_id>/shipping/ DELETE
-- /product/<int:product_id>/category/ GET
-- /category/<int:category_id>/product/ GET
-- /product/<int:product_id>/category/<int:category_id>/ GET
+- /customer/ GET
+- /customer/create/ GET, POST
+- /customer/create/ POST
+- /customer/{{customer_id}}/ GET
+- /customer/{{customer_id}}/ PUT
+- /customer/{{customer_id}}/ DELETE
+- /category/ GET
+- /category/create/ GET, POST
+- /category/create/ POST
+- /category/{{category_id}}/ GET
+- /category/{{category_id}}/ PUT
+- /category/{{category_id}}/ DELETE
+- /product/ GET
+- /product/create GET
+- /product/create POST
+- /product/{{product_id}}/ GET
+- /product/{{product_id}}/ PUT
+- /product/{{product_id}}/ DELETE
+- /order/ GET
+- /order/ POST
+- /order/create/ GET
+- /order/create/ POST
+- /order/{{order_id}}/ GET
+- /order/{{order_id}}/ PUT
+- /order/{{order_id}}/ DELETE
+- /order/{{order_id}}/detail/ GET
+- /order/{{order_id}}/detail/create/ GET
+- /order/{{order_id}}/detail/create/ POST
+- /order/{{order_id}}/detail/{{order_detail_id}}/ GET
+- /order/{{order_id}}/detail/{{order_detail_id}}/ PUT
+- /order/{{order_id}}/detail/{{order_detail_id}}/ DELETE
+- /payment/ GET
+- /payment/create/ GET
+- /payment/create/ POST
+- /payment/{{payment_id}}/ GET
+- /payment/{{payment_id}}/ PUT
+- /shipping/ GET
+- /shipping/create/ GET
+- /shipping/create/ POST
+- /shipping/{{shipping_id}}/ GET
+- /shipping/{{shipping_id}}/ PUT
+- /shipping/{{shipping_id}}/ DELETE
+- /customer/{{customer_id}}/order/ GET
+- /order/{{order_id}}/customer/ GET
+- /product/{{product_id}}/order/ GET
+- /order/{{order_id}}/product/ GET
+- /order/{{order_id}}/product/{{product_id}}/ GET
+- /order/{{order_id}}/product/{{product_id}}/ PUT
+- /order/{{order_id}}/payment/ GET
+- /order/{{order_id}}/payment/ PUT
+- /order/{{order_id}}/shipping/ GET
+- /order/{{order_id}}/shipping/ PUT
+- /order/{{order_id}}/shipping/ DELETE
+- /product/{{product_id}}/category/ GET
+- /category/{{category_id}}/product/ GET
+- /product/{{product_id}}/category/{{category_id}}/ GET
