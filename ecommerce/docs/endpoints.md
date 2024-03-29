@@ -1,5 +1,5 @@
 - /customer/ GET
-- /customer/create/ GET, POST
+- /customer/create/ GET
 - /customer/create/ POST
 - /customer/{{customer_id}}/ GET
 - /customer/{{customer_id}}/ PUT

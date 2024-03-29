@@ -7,6 +7,232 @@
 	},
 	"item": [
 		{
+			"name": "List customers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/customer/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"customer",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a customer",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/customer/create/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"customer",
+						"create",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a customer (POST)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/customer/create/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"customer",
+						"create",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get customer by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/customer/{{customer_id}}/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"customer",
+						"{{customer_id}}",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update customer by id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/customer/{{customer_id}}/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"customer",
+						"{{customer_id}}",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete customer by id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/customer/{{customer_id}}/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"customer",
+						"{{customer_id}}",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a category",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/category/create/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"category",
+						"create",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a category (POST)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/category/create/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"category",
+						"create",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update category by id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/category/{{category_id}}/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"category",
+						"{{category_id}}",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get category by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/category/{{category_id}}/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"category",
+						"{{category_id}}",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List categories",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/category/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"category",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete category by id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/category/{{category_id}}/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"category",
+						"{{category_id}}",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "List products",
 			"request": {
 				"method": "GET",
@@ -103,6 +329,450 @@
 					"path": [
 						"product",
 						"3",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List orders",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/order/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"order",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create an order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/order/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"order",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View order creation form",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/order/create/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"order",
+						"create",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create an order (POST)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/order/create/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"order",
+						"create",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get order by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/order/{{order_id}}/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"order",
+						"{{order_id}}",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update order by id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/order/{{order_id}}/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"order",
+						"{{order_id}}",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete order by id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/order/{{order_id}}/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"order",
+						"{{order_id}}",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View order details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/order/{{order_id}}/detail/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"order",
+						"{{order_id}}",
+						"detail",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View order detail creation form",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/order/{{order_id}}/detail/create/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"order",
+						"{{order_id}}",
+						"detail",
+						"create",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create order detail (POST)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/order/{{order_id}}/detail/create/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"order",
+						"{{order_id}}",
+						"detail",
+						"create",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get order detail by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/order/{{order_id}}/detail/{{order_detail_id}}/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"order",
+						"{{order_id}}",
+						"detail",
+						"{{order_detail_id}}",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update order detail by id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/order/{{order_id}}/detail/{{order_detail_id}}/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"order",
+						"{{order_id}}",
+						"detail",
+						"{{order_detail_id}}",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete order detail by id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/order/{{order_id}}/detail/{{order_detail_id}}/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"order",
+						"{{order_id}}",
+						"detail",
+						"{{order_detail_id}}",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List payments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/payment/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"payment",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View payment creation form",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/payment/create/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"payment",
+						"create",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a payment (POST)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/payment/create/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"payment",
+						"create",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get payment by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/payment/{{payment_id}}/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"payment",
+						"{{payment_id}}",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update payment by id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/payment/{{payment_id}}/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"payment",
+						"{{payment_id}}",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List shipping methods",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/shipping/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"shipping",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View shipping method creation form",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/shipping/create/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"shipping",
+						"create",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a shipping method (POST)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/shipping/create/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"shipping",
+						"create",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get shipping method by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/shipping/{{shipping_id}}/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"shipping",
+						"{{shipping_id}}",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update shipping method by id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/shipping/{{shipping_id}}/",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"shipping",
+						"{{shipping_id}}",
 						""
 					]
 				}
