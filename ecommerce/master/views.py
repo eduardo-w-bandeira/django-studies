@@ -10,7 +10,7 @@ from .forms import CustomerForm, CategoryForm, ProductForm, OrderForm, OrderDeta
 # Glossary
 # --------
 # mobj = models.Model() object
-# mobjs = a collection of mobj
+# mobjs = a mobj collection (list or iterator)
 
 
 def pascal_to_visual(pascal: str) -> str:
