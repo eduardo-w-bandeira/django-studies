@@ -16,8 +16,8 @@ from .forms import CustomerForm, CategoryForm, ProductForm, OrderForm, OrderDeta
 def pascal_to_visual(pascal: str) -> str:
     """Converts PascalCase to a Visual Format (Name Name)"""
     # Insert space before uppercase letters (except first letter)
-    visual_title = re.sub(r'(?<!^)(?=[A-Z])', ' ', pascal)
-    return visual_title
+    visual: str = re.sub(r'(?<!^)(?=[A-Z])', ' ', pascal)
+    return visual
 
 
 def _list_mobjs(request, model_class, mobjs="all") -> JsonResponse:
@@ -49,12 +49,12 @@ def _create_mobj(request, model_class) -> JsonResponse | HttpResponse:
     form_class = eval(f"{class_name}Form")  # E.g. CustomerForm
     if request.method == "GET":
         form = form_class()
-        visual_name = pascal_to_visual(model_class.__name__)
+        visual_name = pascal_to_visual(class_name)
         context = {"form": form,
                    "page_title": f"Create {visual_name}",
                    "button_label": "Create", }
-        # Return a HTML page for creating a new mobject
-        # render function returns a HttpResponse object (as far as I know)
+        # Return a HTML page for creating a new mobject.
+        # The `render` function returns a HttpResponse object.
         return render(request, f'form_base.html', context)
     if request.method == "POST":
         form = form_class(request.POST)
@@ -65,7 +65,7 @@ def _create_mobj(request, model_class) -> JsonResponse | HttpResponse:
     return JsonResponse({'error': "Something went wrong"}, status=400)
 
 
-def _update_mobj(request, mobj, table_name):
+def _update_mobj(request, mobj, table_name) -> JsonResponse:
     data = json.loads(request.body)
     for key, value in data.items():
         field = mobj._meta.get_field(key)
@@ -86,13 +86,14 @@ def _get_or_update_or_delete_mobj(request, mobj, methods=["GET", "PUT", "DELETE"
     if "DELETE" in methods and request.method == "DELETE":
         id = mobj.id
         mobj.delete()
-        return JsonResponse({table_name: f"id {id}deleted"})
+        return JsonResponse({table_name: f"id {id} deleted"})
     return JsonResponse({'error': "Something went wrong"}, status=400)
 
 
+# index page
 def index(request) -> HttpResponse:
-    var = "Ecommerce Page"
-    return HttpResponse(f"<h1>{var}</h1>")
+    title = "Ecommerce Page"
+    return HttpResponse(f"<h1>{title}</h1>")
 
 
 # Customer views
@@ -151,7 +152,7 @@ def order_detail(request, order_id):
     return _get_or_update_or_delete_mobj(request, Order.objects.get(id=order_id))
 
 
-# Order Detail views
+# OrderDetail views
 def order_detail_list(request, order_id):
     order_details = OrderDetail.objects.filter(order_id=order_id)
     return _list_mobjs(request, OrderDetail, order_details)
@@ -178,7 +179,7 @@ def payment_create(request):
 @csrf_exempt
 def payment_detail(request, payment_id):
     payment = Payment.objects.get(id=payment_id)
-    methods = ["GET", "PUT"]  # Not DELETE
+    methods = ["GET", "PUT"]  # No DELETE
     return _get_or_update_or_delete_mobj(request, payment, methods)
 
 
@@ -194,7 +195,7 @@ def shipping_create(request):
 @csrf_exempt
 def shipping_detail(request, shipping_id):
     shipping = Shipping.objects.get(id=shipping_id)
-    methods = ["GET", "PUT"]  # Not DELETE
+    methods = ["GET", "PUT"]  # No DELETE
     return _get_or_update_or_delete_mobj(request, shipping, methods)
 
 
@@ -222,15 +223,18 @@ def order_product_list(request, order_id):
     return _list_mobjs(request, Product, products)
 
 
+@csrf_exempt
 def order_product_detail(request, order_id, product_id):
     return _get_or_update_or_delete_mobj(request, Product.objects.get(id=product_id))
 
 
 # Order-Payment Interaction views
+@csrf_exempt
 def order_payment_detail(request, order_id):
     order = Order.objects.get(id=order_id)
     payment = Payment.objects.get(order=order)
-    return _get_or_update_or_delete_mobj(request, payment)
+    methods = ["GET", "PUT"]  # No DELETE
+    return _get_or_update_or_delete_mobj(request, payment, methods)
 
 
 # Order-Shipping Interaction views
@@ -246,6 +250,7 @@ def category_product_list(request, category_id):
     return _list_mobjs(request, Product, products)
 
 
+@csrf_exempt
 def product_category_detail(request, product_id, category_id):
     category = Category.objects.get(id=category_id)
     return _get_or_update_or_delete_mobj(request, category)
